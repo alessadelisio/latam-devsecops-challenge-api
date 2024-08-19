@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.4.0 (2024-08-19)
+
+### Feature
+
+* feat: adding required dependency ([`229bcd4`](https://github.com/alessadelisio/latam-devsecops-challenge-api/commit/229bcd41a2e814f0f08501338529e70e533de837))
+
 ## v0.3.0 (2024-08-19)
 
 ### Ci
