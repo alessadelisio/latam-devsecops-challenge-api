@@ -1,0 +1,102 @@
+name: "Staging"
+
+on:
+  push:
+    branches:
+      - dev*
+      - feature/*
+      - hotfix/*
+
+jobs:
+  pre-setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v2
+
+      - name: "Set up Python 3.10"
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      - name: "Install pipenv"
+        run: pip install pipenv
+
+      - name: "Cache pipenv"
+        id: cache-pipenv
+        uses: actions/cache@v3
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pipenv-
+
+      - if: ${{ steps.cache-pipenv.outputs.cache-hit != 'true' }}
+        name: "Install dependencies"
+        run: pipenv install --dev
+
+      - name: "Check cache status"
+        run: |
+          echo "Cache Key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}"
+          pipenv run pip list
+
+    outputs:
+      cache-path: ${{ steps.cache-pipenv.outputs.cache-hit }}
+
+  linter:
+    runs-on: ubuntu-latest
+    needs: pre-setup
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v2
+
+      - name: "Install pipenv"
+        run: pip install pipenv
+
+      - name: "Restore pipenv cache"
+        uses: actions/cache@v3
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+
+      - name: "Install dependencies"
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: pipenv install --dev
+
+      - name: "Lint code"
+        run: make lint
+
+      - name: "Upload lint reports"
+        uses: actions/upload-artifact@v3
+        with:
+          name: lints-reports
+          path: reports/lint-reports/**
+
+  test:
+    runs-on: ubuntu-latest
+    needs: pre-setup
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v2
+
+      - name: "Install pipenv"
+        run: pip install pipenv
+
+      - name: "Restore pipenv cache"
+        uses: actions/cache@v3
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+
+      - name: "Install dependencies"
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: pipenv install --dev
+
+      - name: "Run tests"
+        run: make test
+
+      - name: "Upload test reports"
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: reports/test-reports/**
