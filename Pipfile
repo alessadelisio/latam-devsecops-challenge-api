@@ -8,6 +8,7 @@ python-semantic-release = "==9.8.6"
 colorama = "==0.4.6"
 python-dotenv = "*"
 gunicorn = "==23.0.0"
+flask = "*"
 
 [dev-packages]
 pylint = "==3.2.6"
