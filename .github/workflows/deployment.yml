@@ -116,7 +116,7 @@ jobs:
       - name: "Docker build and publish image"
         id: publish
         env:
-          IMAGE: ${{ vars.REGION }}.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ vars.REPOSITORY }}/employees-api:${{ github.sha }}
+          IMAGE: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/devsecops-repository/employees-api:${{ github.sha }}
         run: |
           gcloud auth configure-docker ${{ vars.REGION }}-docker.pkg.dev
           gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
@@ -125,7 +125,7 @@ jobs:
 
       - name: Deploy to Cloud Run
         env:
-          IMAGE: ${{ vars.REGION }}.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ vars.REPOSITORY }}/employees-api:${{ github.sha }}
+          IMAGE: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/devsecops-repository/employees-api:${{ github.sha }}
         run: |
           gcloud config set run/region ${{ vars.REGION }}
           gcloud run deploy employees-api \
