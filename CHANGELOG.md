@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v0.3.0 (2024-08-19)
+
+### Ci
+
+* ci: using direct project&#39;s value ([`ddb2f1f`](https://github.com/alessadelisio/latam-devsecops-challenge-api/commit/ddb2f1f45991f1263ecf6b37d1ad48053a397358))
+
+* ci: fyx typos ([`21dd312`](https://github.com/alessadelisio/latam-devsecops-challenge-api/commit/21dd312b056f2d83fbf2c0525a6ffb7e2fc1d1f0))
+
+* ci: fixing typos ([`d43d5db`](https://github.com/alessadelisio/latam-devsecops-challenge-api/commit/d43d5dbc0f63d21759263a07aad89e54c18bfdb3))
+
+* ci: fix pipeline ([`460e4d7`](https://github.com/alessadelisio/latam-devsecops-challenge-api/commit/460e4d7745bcc243c53120606fab3085d88d8258))
+
+### Feature
+
+* feat: add gunicorn dependency ([`1a6116a`](https://github.com/alessadelisio/latam-devsecops-challenge-api/commit/1a6116a536008783d7393107d2492be6feda0db4))
+
 ## v0.2.0 (2024-08-19)
 
 ### Feature
