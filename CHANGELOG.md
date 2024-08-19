@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.5.0 (2024-08-19)
+
+### Feature
+
+* feat: adding required dependencies ([`2012061`](https://github.com/alessadelisio/latam-devsecops-challenge-api/commit/2012061eb755123fcde0098117f8f3f2f86c1abf))
+
 ## v0.4.0 (2024-08-19)
 
 ### Feature
