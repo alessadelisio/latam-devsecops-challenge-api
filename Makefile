@@ -36,3 +36,10 @@ test:     ## Test the Python code (configuration based on the 'pytest.ini' file)
 	@mkdir -p reports/tests-reports || true
 	@pipenv run pytest 2>&1 | tee reports/tests-reports/pytest-report.txt || true
 	@echo "Test report generated at reports/tests-reports/pytest-report.txt"
+
+.PHONY: run
+run:      ## Executes the application locally.
+	@echo "============================"
+	@echo "Running Flask application..."
+	@echo "============================"
+	@pipenv run python -m flask --app src.app run --debug
