@@ -9,6 +9,8 @@ colorama = "==0.4.6"
 python-dotenv = "*"
 gunicorn = "==23.0.0"
 flask = "*"
+google = "==3.0.0"
+google-cloud-bigquery = "*"
 
 [dev-packages]
 pylint = "==3.2.6"
