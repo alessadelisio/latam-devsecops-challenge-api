@@ -1,8 +1,19 @@
 import logging
 import sys
+from os import getenv
 from typing import ClassVar
 
 from colorama import Back, Fore, Style
+
+PROJECT_ID = getenv("GCP_PROJECT_ID")
+DATASET_ID = getenv("BQ_DATASET_ID")
+TABLE_NAME = getenv("BQ_TABLE_NAME")
+
+EMPLOYEE_QUERY = f"""
+SELECT EmpPhoneNo, EmpSalary, EmployeeName
+FROM `{PROJECT_ID}.{DATASET_ID}.{TABLE_NAME}`
+LIMIT 50
+"""
 
 
 class ColoredFormatter(logging.Formatter):

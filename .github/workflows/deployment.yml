@@ -100,5 +100,37 @@ jobs:
           name: test-reports
           path: reports/test-reports/**
 
-  # deploy:
-    # runs-on: ubuntu-latest
+  deploy:
+    needs: [linter, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v2
+
+      - name: "Set up Cloud SDK"
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker
+
+      - name: Build and push Docker image
+        env:
+          IMAGE: ${{ vars.region }}.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ vars.repository }}/employees-api:${{ github.sha }}
+        run: |
+          docker build -t $IMAGE .
+          docker push $IMAGE
+
+      - name: Deploy to Cloud Run
+        env:
+          IMAGE: ${{ vars.region }}.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ vars.repository }}/employees-api:${{ github.sha }}
+        run: |
+          gcloud run deploy employees-api \
+            --image $IMAGE \
+            --platform managed \
+            --region ${{ vars.region }} \
+            --allow-unauthenticated \
+            --service-account ${{ secrets.SERVICE_ACCOUNT_ID }} \
+            --set-env-vars "GCP_PROJECT_ID=${{ secrets.GCP_PROJECT_ID }},BQ_DATASET_ID=${{ secrets.BQ_DATASET_ID }},BQ_TABLE_NAME=${{ secrets.BQ_TABLE_NAME }}"
