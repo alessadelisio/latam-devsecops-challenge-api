@@ -116,16 +116,16 @@ jobs:
       - name: "Docker build and publish image"
         id: publish
         env:
-          IMAGE: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/devsecops-repository/employees-api:${{ github.sha }}
+          IMAGE: us-central1-docker.pkg.dev/latam-devsecops-challenge/devsecops-repository/employees-api:${{ github.sha }}
         run: |
           gcloud auth configure-docker ${{ vars.REGION }}-docker.pkg.dev
-          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+          gcloud config set project latam-devsecops-challenge
           docker build -t $IMAGE .
           docker push $IMAGE
 
       - name: Deploy to Cloud Run
         env:
-          IMAGE: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/devsecops-repository/employees-api:${{ github.sha }}
+          IMAGE: us-central1-docker.pkg.dev/latam-devsecops-challenge/devsecops-repository/employees-api:${{ github.sha }}
         run: |
           gcloud config set run/region ${{ vars.REGION }}
           gcloud run deploy employees-api \
@@ -134,4 +134,4 @@ jobs:
             --region ${{ vars.REGION }} \
             --allow-unauthenticated \
             --service-account ${{ secrets.SERVICE_ACCOUNT_ID }} \
-            --set-env-vars "GCP_PROJECT_ID=${{ secrets.GCP_PROJECT_ID }},BQ_DATASET_ID=${{ secrets.BQ_DATASET_ID }},BQ_TABLE_NAME=${{ secrets.BQ_TABLE_NAME }}"
+            --set-env-vars "GCP_PROJECT_ID=latam-devsecops-challenge,BQ_DATASET_ID=${{ secrets.BQ_DATASET_ID }},BQ_TABLE_NAME=${{ secrets.BQ_TABLE_NAME }}"
