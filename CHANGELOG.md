@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.5.1 (2024-08-22)
+
+### Fix
+
+* fix: update README.md ([`2a7eecb`](https://github.com/alessadelisio/latam-devsecops-challenge-api/commit/2a7eecbb271597968afe2cb9d66ca8b09d0d02d6))
+
 ## v0.5.0 (2024-08-19)
 
 ### Feature
