@@ -33,7 +33,7 @@ BigQuery permite usar consultas de SQL para analizar tus datos. Este recurso per
 - Puede manejar grandes volúmenes de datos de manera eficiente.
 
 ## IaC
-Para esta primera parte del challenge, se creó la infraestructura necesaria a través de Terraform. Se habilitaron las APIs, se creó el tópico y la subscripción de PubSub enlazada con Bigquery. Además, se creó la tabla y la view de la misma dentro de BigQuery.
+Para esta primera parte del challenge, se creó la infraestructura necesaria a través de Terraform `(link de repositorio de Infra: https://github.com/alessadelisio/latam-devsecops-challenge-infrastructure.git)`. Se habilitaron las APIs, se creó el tópico y la subscripción de PubSub enlazada con Bigquery. Además, se creó la tabla y la view de la misma dentro de BigQuery.
 Esta infraestructura fue deployeada en un pipeline de `GitHub`, donde se propusieron tres workflows. El primero, Terraform Plan, ejecuta entre varias cosas, `terraform plan` y genera un artefacto que posteriormente es consummido por el segundo workflow, `terraform apply`. El cual se encarga de levantar la infraestructura declarada. El último workflow, que es común en los dos repositorios propuestos, se denomina `Release`, el cual se encarga de generar el archivo `CHANGELOG` para los proyectos.
 
 
